@@ -40,6 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # 3rd party libraries
+    'rest_framework',
+    
+    # Installed apps 
+    'RestuarantCore.apps.menu',
 ]
 
 MIDDLEWARE = [
