@@ -6,41 +6,46 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from dateutil.relativedelta import relativedelta
 from django.core.validators import RegexValidator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 
-from two_days_from_now():
-    return timezone.now() - relativedelta(days=2)
+# from two_days_from_now():
+#     return timezone.now() - relativedelta(days=2)
 
 
 class AuthUserManager(BaseUserManager):
-    """_summary_
-      Creates and saves a User with the given email and password.
-    """
-    now = timezone.now()
-    if not email:
-        raise ValueError('Users must have an email address')
-    if not username:
-        raise ValueError('Users must have a username')
-    email = self.normalize_email(email)
-    user = self.model(username=username,
-                          email=email,
-                          is_staff=is_staff, 
-                          is_active=True,
-                          is_superuser=is_superuser, 
-                          last_login=now,
-                          date_joined=now, 
-                          **extra_fields)
+    
+    def _create_user(self, username, email, password, is_staff, is_superuser, **extra_fields):
+        """_summary_
+        Creates and saves a User with the given email and password.
+        """
+        now = timezone.now()
+        if not email:
+            raise ValueError('Users must have an email address')
+        if not username:
+            raise ValueError('Users must have a username')
+        email = self.normalize_email(email)
+        user = self.model(username=username,
+                            email=email,
+                            is_staff=is_staff, 
+                            is_active=True,
+                            is_superuser=is_superuser, 
+                            last_login=now,
+                            date_joined=now, 
+                            **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
+        
 
-        def create_user(self, username, email, password=None, **extra_fields):
+    def create_user(self, username, email, password=None, **extra_fields):
         return self._create_user(username, email, password, False, False, **extra_fields)
 
-        def create_superuser(self, username, email, password, **extra_fields):
-            return self._create_user(username, email, password, True, True, **extra_fields)
+    def create_superuser(self, username, email, password, **extra_fields):
+        return self._create_user(username, email, password, True, True, **extra_fields)
+    
+    
         
         
 class AuthUser(AbstractBaseUser, PermissionsMixin):
