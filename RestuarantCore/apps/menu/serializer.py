@@ -13,8 +13,8 @@ class MenuSerializer(serializers.ModelSerializer):
             'created',
             'updated',
             'id',
-            'user'
+            'get_username'
         ]
-        read_only_fields = ['created', 'updated', 'id', 'user']
+        read_only_fields = ['created', 'updated', 'id', 'get_username']
         
         

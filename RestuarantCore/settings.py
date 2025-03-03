@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     
     # 3rd party libraries
     'rest_framework',
+     'drf_yasg',
     
     # Installed apps 
     'RestuarantCore.apps.menu',
@@ -132,3 +133,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.AuthUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

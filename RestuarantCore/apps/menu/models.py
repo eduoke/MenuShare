@@ -19,10 +19,12 @@ class Menu(models.Model):
     price = models.FloatField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    user = models.name = models.ForeignKey(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         verbose_name=_('User'), 
         on_delete=models.CASCADE,
+        null=True, 
+        blank=True,
         # default=get_user(kwargs.pop('request').user.is_anonymous)
     )
     
@@ -35,13 +37,8 @@ class Menu(models.Model):
     def __str__(self):
         return self.name
     
-    def save(self, *args, **kwargs):
-        # Import get_user to access the logged-in user
-        from django.contrib.auth import get_user
-        # Get the logged-in user from the request
-        user = get_user(kwargs.pop('request').user)
-        self.user = user # Set the user field 
-        if not self.user.is_authenticated:
-            self.user['default'] = user.is_anonymous
-            
-        super().save(*args, **kwargs) # Call the parent save method
+    @property
+    def get_username(self):
+        return self.user.username
+    
+    

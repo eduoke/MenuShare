@@ -28,4 +28,11 @@ class NewUserRegistrationSerializer(serializers.ModelSerializer):
                 setattr(instance, attr, value)
         instance.save()
         return instance
+    
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = UserModel 
+        fields = ['id', 'url', 'username', 'email', 'user_bio']
+        
             
