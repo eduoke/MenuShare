@@ -1,4 +1,39 @@
+"use client";
+
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+
+
+
+/**
+ * Fetches a menu item by ID.
+ * @param {number} id The ID of the menu item to retrieve.
+ */
+
+
+async function deleteMenu(id){
+  const res = await fetch(`http://127.0.0.1:8000/api/v1/menu/${id}/`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to retrieve menu item");
+  }
+  return Promise.resolve();
+}
+
+
+/**
+ * Fetches menu data from the server.
+ */
+async function getData() {
+  const res = await fetch("http://127.0.0.1:8000/api/menu/");
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
 
 export default function Home() {
   return (
